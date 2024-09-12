@@ -1,24 +1,24 @@
 <script setup lang="ts">
 import { defineEmits, defineProps, toRefs } from "vue";
-import { FilterEnum } from "../../domain/todolist.domain";
+import { TodoFilterEnum } from "../../domain/todolist.domain";
 
-const filtersConfig: { type: FilterEnum; text: string }[] = [
-  { type: FilterEnum.ALL, text: "All" },
-  { type: FilterEnum.ACTIVE, text: "Active" },
-  { type: FilterEnum.DONE, text: "Done" },
+const filtersConfig: { type: TodoFilterEnum; text: string }[] = [
+  { type: TodoFilterEnum.ALL, text: "All" },
+  { type: TodoFilterEnum.ACTIVE, text: "Active" },
+  { type: TodoFilterEnum.DONE, text: "Done" },
 ];
 
 const props = defineProps<{
-  currentFilter: FilterEnum;
+  currentFilter: TodoFilterEnum;
 }>();
 
 const { currentFilter } = toRefs(props);
 
 const emit = defineEmits<{
-  (e: "setCurrentFilter", filterType: FilterEnum): void;
+  (e: "setCurrentFilter", filterType: TodoFilterEnum): void;
 }>();
 
-const onSetCurrentFilter = (type: FilterEnum) => {
+const onSetCurrentFilter = (type: TodoFilterEnum) => {
   emit("setCurrentFilter", type);
 };
 </script>

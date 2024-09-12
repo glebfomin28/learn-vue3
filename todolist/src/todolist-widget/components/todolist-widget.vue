@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed, ref } from "vue";
-import { FilterEnum, TodoType } from "../domain/todolist.domain";
+import { TodoFilterEnum, TodoType } from "../domain/todolist.domain";
 import TodolistHeader from "./partials/todolist-header.vue";
 import TodolistFilters from "./partials/todolist-filters.vue";
 import TodolistForm from "./partials/todolist-form.vue";
@@ -14,16 +14,18 @@ const todos = ref<TodoType[]>([
     isCompleted: true,
   },
 ]);
-const currentFilter = ref<FilterEnum>(FilterEnum.ALL);
+const currentFilter = ref<TodoFilterEnum>(TodoFilterEnum.ALL);
 
 const filteredTodos = computed(() => filterTodos(currentFilter.value));
 
-const doneTodosCount = computed(() => filterTodos(FilterEnum.DONE).length);
-const activeTodosCount = computed(() => filterTodos(FilterEnum.ACTIVE).length);
+const doneTodosCount = computed(() => filterTodos(TodoFilterEnum.DONE).length);
+const activeTodosCount = computed(
+  () => filterTodos(TodoFilterEnum.ACTIVE).length
+);
 
 const addTodo = (todo: TodoType) => {
   todos.value.push(todo);
-  currentFilter.value = FilterEnum.ALL;
+  currentFilter.value = TodoFilterEnum.ALL;
 };
 
 const deleteTodo = (todoId: string) => {
@@ -49,14 +51,14 @@ const toggleTodo = (todoId: string) => {
   });
 };
 
-const setCurrentFilter = (filterType: FilterEnum) => {
+const setCurrentFilter = (filterType: TodoFilterEnum) => {
   currentFilter.value = filterType;
 };
 
-function filterTodos(filterType: FilterEnum) {
-  if (filterType === FilterEnum.ACTIVE) {
+function filterTodos(filterType: TodoFilterEnum) {
+  if (filterType === TodoFilterEnum.ACTIVE) {
     return todos.value.filter((item) => !item.isCompleted);
-  } else if (filterType === FilterEnum.DONE) {
+  } else if (filterType === TodoFilterEnum.DONE) {
     return todos.value.filter((item) => item.isCompleted);
   } else {
     return todos.value;
