@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defineEmits, ref } from "vue";
-import { TodoType } from "@/entities/todo";
+import { TodoType } from "../../domain/todolist.domain";
 
 const isOpenForm = ref<boolean>(false);
 const textTodo = ref<string>("");

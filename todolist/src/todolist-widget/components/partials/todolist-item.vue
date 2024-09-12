@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defineProps, toRefs, defineEmits } from "vue";
-import { TodoType } from "@/entities/todo";
+import { TodoType } from "../../domain/todolist.domain";
 
 const props = defineProps<{
   todo: TodoType;
