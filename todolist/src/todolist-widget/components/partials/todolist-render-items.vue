@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { defineProps, toRefs } from "vue";
-import TodolistItem from "@/todolist-widget/components/partials/todolist-item.vue";
 import { TodoType } from "../../domain/todolist.domain";
+import TodolistItem from "./todolist-item.vue";
 
 const props = defineProps<{
   todos: TodoType[];
