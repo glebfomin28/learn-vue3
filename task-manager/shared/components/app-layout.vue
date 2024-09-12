@@ -13,6 +13,7 @@ import Button from 'primevue/button';
     <slot name="content"/>
   </main>
 </div>
+
 </template>
 
 <style scoped>
