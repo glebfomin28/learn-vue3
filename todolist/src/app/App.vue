@@ -1,99 +1,19 @@
 <script lang="ts" setup>
-import AppHeader from "@/components/app-header.vue";
-import AppFilters from "@/components/app-filters.vue";
-import AppTodolist from "@/components/app-todolist.vue";
-import AppAddTodo from "@/components/app-add-todo.vue";
-import AppFooter from "@/components/app-footer.vue";
-import { computed, ref } from "vue";
-import { TodoType } from "@/entities/todo";
-import { FilterType } from "@/entities/todo/todo.type";
-
-const todos = ref<TodoType[]>([
-  {
-    id: "1",
-    text: "text",
-    isCompleted: true,
-  },
-]);
-const currentFilter = ref<FilterType>("all");
-
-const filteredTodos = computed(() => filterdTodos(currentFilter.value));
-
-const doneTodosCount = computed(() => filterdTodos("done").length);
-const activeTodosCount = computed(() => filterdTodos("active").length);
-
-const addTodo = (todo: TodoType) => {
-  todos.value.push(todo);
-  currentFilter.value = "all";
-};
-
-const deleteTodo = (todoId: string) => {
-  todos.value = todos.value.filter((item) => item.id !== todoId);
-};
-
-const toggleTodo = (todoId: string) => {
-  // const currentTodo = todos.value.find((item) => item.id === todoId);
-  //
-  // if (currentTodo) {
-  //   currentTodo.isCompleted = !currentTodo.isCompleted;
-  // }
-
-  todos.value = todos.value.map((item) => {
-    if (item.id === todoId) {
-      return {
-        ...item,
-        isCompleted: !item.isCompleted,
-      };
-    }
-
-    return item;
-  });
-};
-
-const setCurrentFilter = (filterType: FilterType) => {
-  currentFilter.value = filterType;
-};
-
-function filterdTodos(filterType: FilterType) {
-  if (filterType === "active") {
-    return todos.value.filter((item) => !item.isCompleted);
-  } else if (filterType === "done") {
-    return todos.value.filter((item) => item.isCompleted);
-  } else {
-    return todos.value;
-  }
-}
+import TodolistWidget from "@/todolist-widget";
 </script>
 
 <template>
   <div id="app">
-    <app-header />
-    <app-filters
-      :currentFilter="currentFilter"
-      @setCurrentFilter="setCurrentFilter"
-    />
-    <main class="app-main">
-      <app-todolist
-        :todos="filteredTodos"
-        :toggleTodo="toggleTodo"
-        :deleteTodo="deleteTodo"
-      />
-      <app-add-todo @addTodo="addTodo" />
-    </main>
-    <app-footer
-      :activeTodosCount="activeTodosCount"
-      :doneTodosCount="doneTodosCount"
-    />
+    <TodolistWidget />
   </div>
 </template>
 
 <style>
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css");
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap");
-
 :root {
-  --primary-color: #e30808;
-  --secondary-color: #e3e3e3;
+  --primary-color: #00249c;
+  --secondary-color: #989898;
   --light-color: #f0f0f0;
   --reverse-color: #ffffff;
   --default-color: #000000;
@@ -148,6 +68,19 @@ button {
   width: 34rem;
 }
 
+.app-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.6rem;
+}
+
+.logo {
+  font-size: 2.4rem;
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
 .burger {
   font-size: 1.9rem;
 }
@@ -158,6 +91,12 @@ button {
 
 .burger:hover {
   color: var(--primary-color);
+}
+
+.app-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
 }
 
 .text-input {
@@ -337,5 +276,6 @@ button {
 .app-footer {
   font-size: 1.4rem;
   text-align: center;
+  color: var(--secondary-color);
 }
 </style>

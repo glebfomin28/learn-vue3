@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import AppTodoItem from "@/components/app-todo-item.vue";
 import { defineProps, toRefs } from "vue";
-import { TodoType } from "@/entities/todo";
+import TodolistItem from "@/todolist-widget/components/partials/todolist-item.vue";
+import { TodoType } from "../../domain/todolist.domain";
 
 const props = defineProps<{
   todos: TodoType[];
@@ -15,7 +15,7 @@ const { todos } = toRefs(props);
 <template>
   <div v-if="!todos?.length">Empty... Add a new task!</div>
   <ul class="todo-list">
-    <app-todo-item
+    <TodolistItem
       v-for="todo in todos"
       :key="todo.id"
       :todo="todo"
